@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f9dce6">
+<title>Para Rafaella ❤️</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:linear-gradient(135deg,#fce4ec,#f8bbd0,#fce4ec);font-family:Georgia,serif;color:#71364c;display:flex;align-items:center;justify-content:center;padding:20px;overflow-x:hidden}
+.container{width:100%;max-width:480px;background:rgba(255,255,255,.94);padding:35px 25px;border-radius:25px;text-align:center;box-shadow:0 15px 45px rgba(130,40,75,.18);position:relative;z-index:2}
+.heart{font-size:55px;animation:heartbeat 1.5s infinite;margin-bottom:15px}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+h1{font-size:29px;margin-bottom:18px;color:#ad4168}
+.subtitle{font-size:16px;line-height:1.8;margin-bottom:20px}
+.divider{width:70px;height:3px;background:#e8a0ba;margin:22px auto;border-radius:10px}
+.question{font-size:20px;line-height:1.5;margin:22px 0;color:#9c3d60}
+.buttons{position:relative;min-height:165px;margin-top:20px}
+.main-buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+button{border:none;padding:14px 20px;border-radius:30px;font-size:14px;font-weight:bold;cursor:pointer;transition:transform .2s;font-family:Arial,sans-serif}
+button:active{transform:scale(.96)}
+.yes{background:#d85b83;color:white}.talk{background:#f6d8e3;color:#873b59}
+.no{position:absolute;left:50%;top:90px;transform:translateX(-50%);background:#eee;color:#555;white-space:nowrap;z-index:3}
+.response{background:#fff0f5;border-radius:18px;padding:22px;margin-top:20px;line-height:1.8;animation:appear .7s ease;display:none}
+@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.signature{margin-top:30px;font-style:italic;color:#b35c7b}
+.heart-float{position:fixed;bottom:-40px;pointer-events:none;animation:floatUp 6s linear forwards;z-index:1}
+@keyframes floatUp{to{transform:translateY(-110vh) rotate(360deg);opacity:0}}
+.small{font-size:13px;color:#b17a8e;margin-top:15px}
+</style>
+</head>
+<body>
+<main class="container">
+  <div class="heart">❤️</div>
+  <h1>Rafaella...</h1>
+  <p class="subtitle">Existe algo que há algum tempo eu gostaria de te dizer. Talvez eu não encontre as palavras perfeitas, mas quero tentar expressar o que sinto.</p>
+  <div class="divider"></div>
+  <p class="subtitle">Você é alguém especial para mim. E, mesmo com tudo o que já aconteceu, existem sentimentos que continuam aqui.</p>
+  <p class="subtitle">Não quero fingir que tudo foi perfeito. Sei que existem coisas que poderiam ter sido diferentes. Mas acredito que algumas histórias merecem uma conversa sincera e uma nova oportunidade.</p>
+  <p class="subtitle">Não estou aqui para te pressionar. Só queria que você soubesse que ainda tenho carinho por você e que gostaria de descobrir o que poderia acontecer entre nós.</p>
+  <div class="divider"></div>
+  <h2 class="question">Rafaella, você me daria uma chance? ❤️</h2>
+  <div class="buttons" id="buttons">
+    <div class="main-buttons">
+      <button class="yes" onclick="respond('yes')">SIM ❤️</button>
+      <button class="talk" onclick="respond('talk')">QUERO CONVERSAR 💬</button>
+    </div>
+    <button class="no" id="noButton">NÃO 💔</button>
+  </div>
+  <div class="response" id="response" aria-live="polite"></div>
+  <p class="signature">Com carinho,<br>Luiz ❤️</p>
+  <p class="small">Feito especialmente para você.</p>
+</main>
+<script>
+const noButton=document.getElementById("noButton");
+const buttonsArea=document.getElementById("buttons");
+const response=document.getElementById("response");
+let attempts=0;
+const maxAttempts=5;
+function moveNoButton(){
+  if(attempts>=maxAttempts)return;
+  attempts++;
+  const maxX=Math.max(0,buttonsArea.clientWidth-noButton.offsetWidth);
+  const maxY=Math.max(0,buttonsArea.clientHeight-noButton.offsetHeight);
+  noButton.style.left=(Math.random()*maxX)+"px";
+  noButton.style.top=(Math.random()*maxY)+"px";
+  noButton.style.transform="none";
+  if(attempts===maxAttempts)noButton.title="Agora você pode escolher";
+}
+noButton.addEventListener("pointerenter",()=>{if(attempts<maxAttempts)moveNoButton()});
+noButton.addEventListener("pointerdown",event=>{
+  if(attempts<maxAttempts){event.preventDefault();moveNoButton()}
+});
+noButton.addEventListener("click",()=>{
+  if(attempts>=maxAttempts)showResponse("Tudo bem, Rafaella. ❤️ Obrigado por ler minha declaração. Respeito sua decisão e desejo que você fique bem.");
+});
+function respond(type){
+  if(type==="yes"){
+    showResponse("Rafaella, você acabou de deixar meu dia muito mais feliz! ❤️ Quero que a gente possa construir algo bonito, com respeito, carinho, sinceridade e momentos especiais. Obrigado por me dar essa oportunidade!");
+    createHearts();
+  }else{
+    showResponse("Fico feliz que você queira conversar. 💗 Não quero apressar nada. Gostaria de ouvir você, falar sobre o que sinto e entender o que podemos construir. Uma conversa sincera já significa muito para mim.");
+  }
+}
+function showResponse(message){
+  response.textContent=message;
+  response.style.display="block";
+  response.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function createHearts(){
+  for(let i=0;i<35;i++){
+    setTimeout(()=>{
+      const heart=document.createElement("div");
+      heart.className="heart-float";
+      heart.textContent=["❤️","💕","💗","💖"][Math.floor(Math.random()*4)];
+      heart.style.left=Math.random()*100+"vw";
+      heart.style.fontSize=(18+Math.random()*25)+"px";
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),6000);
+    },i*100);
+  }
+}
+</script>
+</body>
+</html>
